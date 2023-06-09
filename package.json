@@ -21,6 +21,7 @@
   "homepage": "https://github.com/BeRealDude/movies-explorer-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "celebrate": "^15.0.1",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "dotenv": "^16.1.3",

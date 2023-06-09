@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const cors = require('cors');
-
+const { errors } = require('celebrate');
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -24,6 +24,8 @@ app.use(requestLogger);
 app.use(routes);
 
 app.use(errorLogger);
+
+app.use(errors());
 
 app.use(errorCenter);
 
