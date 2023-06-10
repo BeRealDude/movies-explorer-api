@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const { NODE_ENV, JWT_SECRET } = require('../config');
 const User = require('../models/user');
 const AccountUsed = require('../error/account-used');
@@ -7,9 +8,19 @@ const PageNotFound = require('../error/page-not-found');
 const IncorrectData = require('../error/incorrect-data');
 
 module.exports.getUser = (req, res, next) => {
-  User.find({})
-    .then((users) => res.send(users))
-    .catch((err) => next(err));
+  const { _id } = req.user;
+  User.findById(_id)
+    .then((user) => {
+      if (user) return res.send({ email: user.email, name: user.name });
+      throw new PageNotFound('Пользователь по указанному id не найден');
+    })
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError) {
+        next(new IncorrectData('Передан некорректный id пользователя'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.signupUser = (req, res, next) => {

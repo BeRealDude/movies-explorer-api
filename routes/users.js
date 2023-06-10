@@ -3,7 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 
 const { getUser, updateUser } = require('../controllers/users');
 
-router.get('/', getUser);
+router.get('/me', getUser);
 router.patch('/me', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
