@@ -16,10 +16,20 @@ const IncorrectData = require('../error/incorrect-data');
 const NoAccess = require('../error/no-access');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({})
-    .populate(['owner'])
-    .then((Movies) => res.send(Movies))
-    .catch(next);
+  const { _id } = req.user;
+  Movie.find({ owner: _id })
+    .populate('owner', '_id')
+    .then((movies) => {
+      if (movies) return res.send(movies);
+      throw new PageNotFound('Пользователь по указанному id не найден');
+    })
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError) {
+        next(new IncorrectData('Передан некорректный id пользователя'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.createMovie = (req, res, next) => {
