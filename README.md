@@ -5,8 +5,10 @@
 
 ### Адрес репозитория: https://github.com/BeRealDude/movies-explorer-api
 ### Ссылки на проект: 
-IP ...
-Backend ...
+IP 51.250.29.5
+
+Backend https://api.nvs.diploma.nomoredomains.rocks
+
 ## Функционал
 * Регистрация и авторизация пользователя
 * Редактирование данных пользователя
