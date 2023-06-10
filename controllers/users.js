@@ -66,6 +66,18 @@ module.exports.updateUser = (req, res, next) => {
       throw new PageNotFound('Пользователь по указанному id не найден');
     })
     .catch((err) => {
-      next(err);
+      if (err.code === 11000) {
+        return next(new AccountUsed('Аккаунт с этой почтой уже существует'));
+      }
+
+      if (err instanceof mongoose.Error.CastError) {
+        return next(new IncorrectData('Передан некорректный id пользователя'));
+      }
+
+      if (err instanceof mongoose.Error.ValidationError) {
+        return next(new IncorrectData('Переданы некорректные данные при обновлении пользователя'));
+      }
+
+      return next(err);
     });
 };
