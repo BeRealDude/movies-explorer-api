@@ -91,7 +91,7 @@ module.exports.deleteMovie = async (req, res, next) => {
       res.send({ message: 'Фильм удален.' });
     }
   } catch (err) {
-    if (err instanceof mongoose.Error.ValidationError) {
+    if (err instanceof mongoose.Error.CastError) {
       next(new IncorrectData('Указан некорректный id при удалении фильма.'));
     } else { next(err); }
   }

@@ -35,7 +35,7 @@ module.exports.signupUser = (req, res, next) => {
     .catch((err) => {
       if (err.code === 11000) {
         next(new AccountUsed('Аккаунт с этой почтой уже существует'));
-      } if (err instanceof Error) {
+      } if (err instanceof mongoose.Error.ValidationError) {
         next(new IncorrectData('Переданы некорректные данные при создании пользователя'));
       } else {
         next(err);
