@@ -1,5 +1,5 @@
 const router = require('express').Router();
-// const PageNotFound = require('../error/page-not-found');
+const PageNotFound = require('../error/page-not-found');
 
 const auth = require('../middlewares/auth');
 
@@ -16,6 +16,6 @@ router.use(auth);
 router.use('/users', usersRoutes);
 router.use('/movies', moviesRoutes);
 
-// router.use((req, res, next) => next(new PageNotFound('Страница не найдена')));
+router.use((req, res, next) => next(new PageNotFound('Страница не найдена')));
 
 module.exports = router;
