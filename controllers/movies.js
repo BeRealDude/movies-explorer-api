@@ -79,7 +79,7 @@ module.exports.createMovie = (req, res, next) => {
 
 module.exports.deleteMovie = async (req, res, next) => {
   const { _id: idUser } = req.user;
-  const { movieId } = req.params;
+  const { id: movieId } = req.params;
   try {
     const movie = await Movie.findById(movieId);
     if (!movie) throw new PageNotFound('Фильм с указанным id не найден.');
